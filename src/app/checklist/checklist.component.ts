@@ -2,11 +2,12 @@ import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { ChecklistService } from '../shared/data-access/checklist.service';
+import { ChecklistHeaderComponent } from './ui/checklist-header/checklist-header.component';
 
 @Component({
   selector: 'app-checklist',
   standalone: true,
-  imports: [],
+  imports: [ChecklistHeaderComponent],
   templateUrl: './checklist.component.html',
   styleUrl: './checklist.component.scss'
 })
