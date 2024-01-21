@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject } from 'rxjs';
 import { ChecklistItem, AddChecklistItem, RemoveChecklistItem } from '../../shared/interfaces/checklist-item';
@@ -24,6 +24,7 @@ export class ChecklistItemService {
 
   // selectors
   checklistItems = computed(() => this.state().checklistItems);
+  loaded = computed(() => this.state().loaded);
 
   // sources
   add$ = new Subject<AddChecklistItem>();
@@ -77,6 +78,11 @@ export class ChecklistItemService {
           checklistItems,
           loaded: true,
         }))
-      );
+    );
+    effect(() => {
+      if (this.loaded()) {
+        this.storageService.saveChecklistItems(this.checklistItems());
+      }
+    });
   }
 }
