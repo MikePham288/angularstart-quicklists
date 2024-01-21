@@ -4,6 +4,7 @@
     {{ checklist.title }}
   </h1>
   <div>
+    <button (click)="resetChecklist.emit(checklist.id)">Reset</button>
     <button (click)="addItem.emit()">Add item</button>
   </div>
 </header>
