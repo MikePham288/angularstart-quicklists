@@ -1,15 +1,15 @@
 import { Component, ContentChild, Input, TemplateRef, inject } from '@angular/core';
-import { Dialog } from '@angular/cdk/dialog';
+import { Dialog, DialogModule } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [],
+  imports: [DialogModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
-dialog = inject(Dialog);
+  dialog = inject(Dialog);
 
   @Input() set isOpen(value: boolean) {
     if (value) {
