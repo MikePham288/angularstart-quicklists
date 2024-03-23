@@ -11,4 +11,6 @@ import { ChecklistItem, RemoveChecklistItem } from '../../../shared/interfaces/c
 export class ChecklistItemListComponent {
   @Input({ required: true }) checklistItems!: ChecklistItem[];
   @Output() toggle = new EventEmitter<RemoveChecklistItem>();
+  @Output() delete = new EventEmitter<RemoveChecklistItem>();
+  @Output() edit = new EventEmitter<ChecklistItem>();
 }

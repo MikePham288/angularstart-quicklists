@@ -1,14 +1,24 @@
 @if (checklist(); as checklist){
-<app-checklist-header [checklist]="checklist" (addItem)="checklistItemBeingEdited.set({})" (resetChecklist)="checklistItemService.reset$.next($event)" />
+<app-checklist-header [checklist]="checklist" (addItem)="checklistItemBeingEdited.set({})"
+  (resetChecklist)="checklistItemService.reset$.next($event)" />
 }
 
-<app-checklist-item-list [checklistItems]="items()" (toggle)="checklistItemService.toggle$.next($event)"  />
+<app-checklist-item-list [checklistItems]="items()" (toggle)="checklistItemService.toggle$.next($event)"
+  (edit)="checklistItemBeingEdited.set($event)" (toggle)="checklistItemService.toggle$.next($event)" />
 
 <app-modal [isOpen]="!!checklistItemBeingEdited()">
   <ng-template>
-    <app-form-modal title="Create item" [formGroup]="checklistItemForm" (save)="checklistItemService.add$.next({
-                item: checklistItemForm.getRawValue(),
-                checklistId: checklist()?.id!,
-              })" (close)="checklistItemBeingEdited.set(null)"></app-form-modal>
+    <app-form-modal title="Create item" [formGroup]="checklistItemForm" (close)="checklistItemBeingEdited.set(null)"
+      (save)="
+      checklistItemBeingEdited()?.id
+        ? checklistItemService.edit$.next({
+          id: checklistItemBeingEdited()!.id!,
+          data: checklistItemForm.getRawValue(),
+        })
+        : checklistItemService.add$.next({
+          item: checklistItemForm.getRawValue(),
+          checklistId: checklist()?.id!,
+        })
+    "></app-form-modal>
   </ng-template>
 </app-modal>
