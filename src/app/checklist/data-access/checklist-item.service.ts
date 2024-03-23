@@ -89,7 +89,7 @@ export class ChecklistItemService {
     this.edit$.pipe(takeUntilDestroyed()).subscribe((checklistItem) => this.state.update((state) => ({
       ...state,
       checklistItems: state.checklistItems.map((item) =>
-        item.checklistId === checklistItem.id ? { ...item, title: checklistItem.data.title } : item
+        item.id === checklistItem.id ? { ...item, title: checklistItem.data.title } : item
       ),
     })))
 
