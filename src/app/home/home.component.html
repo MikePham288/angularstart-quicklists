@@ -9,12 +9,19 @@
                 checklistBeingEdited()?.title
                   ? checklistBeingEdited()!.title!
                   : 'Add Checklist'
-              " [formGroup]="checklistForm" (close)="checklistBeingEdited.set(null)"
-      (save)="checklistService.add$.next(checklistForm.getRawValue())" />
+              " [formGroup]="checklistForm" (close)="checklistBeingEdited.set(null)" (save)="
+    checklistBeingEdited()?.id
+      ? checklistService.edit$.next({
+          id: checklistBeingEdited()!.id!,
+          data: checklistForm.getRawValue()
+        })
+      : checklistService.add$.next(checklistForm.getRawValue())
+  " />
   </ng-template>
 </app-modal>
 
-  <section>
-    <h2>Your checklists</h2>
-    <app-checklist-list [checklists]="checklistService.checklists()" />
-  </section>
+<section>
+  <h2>Your checklists</h2>
+  <app-checklist-list [checklists]="checklistService.checklists()" (delete)="checklistService.remove$.next($event)"
+    (edit)="checklistBeingEdited.set($event)" />
+</section>
